@@ -10,7 +10,7 @@
         <!--My Expenses-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyExpensesViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="MyTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -21,10 +21,15 @@
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jvX-y9-1QO">
                                 <segments>
-                                    <segment title="Daily"/>
+                                    <segment title="All"/>
+                                    <segment title="Today"/>
                                     <segment title="Weekly"/>
                                     <segment title="Monthly"/>
                                 </segments>
+                                <color key="tintColor" red="0.20784313730000001" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="segmentChangedAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="3jZ-F1-Bng"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2jM-iu-fIB">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -47,11 +52,14 @@
                                                     <frame key="frameInset" minX="15" minY="25" width="44" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="fkA-LQ-DN3" kind="presentation" identifier="SegueExpenseViewController" id="0lE-P6-qwF"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -73,8 +81,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="My Expenses" id="xIZ-PW-9Jg">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Bqw-jm-QuH">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="uDD-My-lvP" kind="presentation" identifier="SegueAddExpenseViewController" id="nq7-Py-e9y"/>
+                                <segue destination="fkA-LQ-DN3" kind="presentation" identifier="SegueAddExpenseViewController" id="lVw-1Z-adE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -84,7 +93,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1113.75" y="122.5"/>
+            <point key="canvasLocation" x="2482.5" y="122.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ao9-iW-7Cs">
@@ -94,15 +103,19 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dBI-3m-JNc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="2Vf-kO-Mzt"/>
+                        <segue destination="N27-58-XdK" kind="relationship" relationship="rootViewController" id="xGF-0m-q56"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSF-iv-ohg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-13" y="123"/>
+            <point key="canvasLocation" x="133" y="123"/>
         </scene>
         <!--Add Expense-->
         <scene sceneID="t2y-EN-ikN">
@@ -125,7 +138,7 @@
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I9r-MN-iPW">
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -164,17 +177,31 @@
                                             <frame key="frameInset" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="category" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5uK-1N-GYN">
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="category" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5uK-1N-GYN">
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79Q-o6-4hx">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="HVZ-AQ-Y62"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="tintColor" red="0.20784313730000001" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" title="Select"/>
+                                                    <connections>
+                                                        <action selector="selectAction:" destination="h3Y-pu-Ewt" eventType="touchUpInside" id="E4a-jF-vzT"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="5uK-1N-GYN" firstAttribute="top" secondItem="K1J-TE-kNy" secondAttribute="top" constant="5" id="B3I-Tq-PdT"/>
+                                                <constraint firstItem="79Q-o6-4hx" firstAttribute="top" secondItem="K1J-TE-kNy" secondAttribute="top" constant="6" id="COi-1s-PZk"/>
                                                 <constraint firstItem="5uK-1N-GYN" firstAttribute="leading" secondItem="K1J-TE-kNy" secondAttribute="leading" constant="20" id="Jz3-7v-8N1"/>
                                                 <constraint firstAttribute="bottom" secondItem="5uK-1N-GYN" secondAttribute="bottom" constant="5" id="XoS-yR-Cf0"/>
-                                                <constraint firstAttribute="trailing" secondItem="5uK-1N-GYN" secondAttribute="trailing" constant="20" id="ptu-Rz-5VH"/>
+                                                <constraint firstAttribute="bottom" secondItem="79Q-o6-4hx" secondAttribute="bottom" constant="7" id="eoo-uV-cPa"/>
+                                                <constraint firstAttribute="trailing" secondItem="79Q-o6-4hx" secondAttribute="trailing" constant="8" id="l25-Us-xyC"/>
+                                                <constraint firstItem="79Q-o6-4hx" firstAttribute="leading" secondItem="5uK-1N-GYN" secondAttribute="trailing" constant="20" id="sR7-l9-RTL"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -185,8 +212,8 @@
                                             <frame key="frameInset" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="J5B-nI-sNc">
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J5B-nI-sNc">
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -208,12 +235,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Add Expense" id="tIq-pC-VGR">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="mdU-dR-XUF">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="mdl-C4-AT1">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="cancel:" destination="h3Y-pu-Ewt" id="mfZ-ED-Sd0"/>
+                                <action selector="cancelAction:" destination="h3Y-pu-Ewt" id="QWG-g4-ODC"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Xqs-x7-ZiT">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="save:" destination="h3Y-pu-Ewt" id="LOr-C8-qJ3"/>
                             </connections>
@@ -228,25 +257,159 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nqv-LX-OfG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2651" y="123"/>
+            <point key="canvasLocation" x="3851.25" y="122.5"/>
+        </scene>
+        <!--Category Expense View Controller-->
+        <scene sceneID="SVD-TP-zdY">
+            <objects>
+                <tableViewController storyboardIdentifier="CategoryViewController" id="egS-By-Vul" customClass="CategoryExpenseViewController" customModule="MyTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WyQ-Lo-yOC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reuseIdentifier" textLabel="323-I2-h1T" style="IBUITableViewCellStyleDefault" id="UmE-Ik-OnS">
+                                <rect key="frame" x="0.0" y="28" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UmE-Ik-OnS" id="esV-aj-mnD">
+                                    <frame key="frameInset" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="323-I2-h1T">
+                                            <frame key="frameInset" minX="15" width="290" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="egS-By-Vul" id="AYa-yW-s28"/>
+                            <outlet property="delegate" destination="egS-By-Vul" id="3yZ-Sk-oPx"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vBY-Da-dCJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4565.625" y="122.5"/>
+        </scene>
+        <!--Passcode-->
+        <scene sceneID="fI8-tw-IOf">
+            <objects>
+                <viewController storyboardIdentifier="PasscodeViewController" id="N27-58-XdK" customClass="PasscodeViewController" customModule="MyTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="yaR-j7-zPB"/>
+                        <viewControllerLayoutGuide type="bottom" id="phg-PC-DVM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hr9-sf-oCZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HW3-Q5-a2C">
+                                <frame key="frameInset" minX="-2" height="44" maxX="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Passcode" id="841-Oy-tmv"/>
+                                </items>
+                            </navigationBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qmG-Gz-ks0">
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set the passcode for your expense" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8A-kl-L6f">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QeK-G2-rZk">
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="N27-58-XdK" id="J6Z-S3-Jqe"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K1H-Et-CVz">
+                                        <color key="backgroundColor" red="0.20784313730000001" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="Submit">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="doneAction:" destination="N27-58-XdK" eventType="touchUpInside" id="TyN-zl-fNT"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="qmG-Gz-ks0" secondAttribute="trailing" id="3et-KH-WYC"/>
+                            <constraint firstItem="qmG-Gz-ks0" firstAttribute="centerX" secondItem="hr9-sf-oCZ" secondAttribute="centerX" id="4tv-YC-Ua1"/>
+                            <constraint firstItem="qmG-Gz-ks0" firstAttribute="centerY" secondItem="hr9-sf-oCZ" secondAttribute="centerY" id="DxM-ek-yMe"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Passcode" id="uIw-aG-jW7"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="messageLabel" destination="A8A-kl-L6f" id="dNe-Cq-d5e"/>
+                        <outlet property="passcodeField" destination="QeK-G2-rZk" id="rkW-Ua-WKd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qbO-Mt-qxO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="915" y="123"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="csn-BW-2eO">
+        <scene sceneID="UE2-Nv-5d7">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="uDD-My-lvP" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fkA-LQ-DN3" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bPH-ZO-xBY">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ewd-YI-thI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="h3Y-pu-Ewt" kind="relationship" relationship="rootViewController" id="ehO-XS-vVV"/>
+                        <segue destination="h3Y-pu-Ewt" kind="relationship" relationship="rootViewController" id="CTV-nd-l1J"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="g5M-Rf-Srw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T9H-95-68F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1837.5" y="122.5"/>
+            <point key="canvasLocation" x="3168.75" y="122.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jvv-of-2q2">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NJa-QU-r9s" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vh1-84-5u4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.20784313730000001" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="7CJ-cy-e0K"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WjE-yX-Qsn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1723" y="123"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="0lE-P6-qwF"/>
+    </inferredMetricsTieBreakers>
 </document>
